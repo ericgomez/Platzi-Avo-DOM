@@ -7,6 +7,12 @@ const baseUrl = "https://platzi-avo-nine.vercel.app"
 
 const appNode = document.querySelector('#app')
 
+appNode.addEventListener('click', event => {
+  if (event.target.nodeName === 'H2') { //Si el elemento es un H2 haz esto, y funciona para todos los H2
+      window.alert('hola');
+    }
+});
+
 // INTL
 // 1 - formato a fechas
 // 2 - formato a monedas
