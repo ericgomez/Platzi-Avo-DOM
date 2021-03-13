@@ -7,6 +7,18 @@ const baseUrl = "https://platzi-avo-nine.vercel.app"
 
 const appNode = document.querySelector('#app')
 
+// INTL
+// 1 - formato a fechas
+// 2 - formato a monedas
+const formatPrice = (price) => {
+  const newPrice = new window.Intl.NumberFormat('en-EN', {
+    style: 'currency',
+    currency: 'USD'
+  }).format(price)
+
+  return newPrice
+}
+
 // Web api
 // Conectarnos al server
 window
@@ -21,22 +33,41 @@ window
       const imagen = document.createElement('img')
       // Informacion desde la API
       imagen.src = `${baseUrl}${item.image}`
+      imagen.className = 'h-16 w-16 md:h-24 md:w-24 rounded-full mx-auto md:mx-0 md:mr-6'
 
       // Crear titulo
       const title = document.createElement('h2')
       // Informacion desde la API
       title.textContent = item.name
+      // Style
+      // title.style = 'font-size: 2rem'
+      // title.style.fontSize = '2rem'
+      title.className = 'text-lg'
+
 
       // Crear precio
       const price = document.createElement('div')
       // Informacion desde la API
-      price.textContent = item.price
-      
-      const container = document.createElement('div')
-      container.append(imagen, title, price)
+      price.textContent = formatPrice(item.price)
+      price.className = 'text-gray-600'
 
-      allItems.push(container)
+      // Create price & title
+      // <div class="text-center md:text-left"><price><title></div>
+      const priceAndTitle = document.createElement('div')
+      priceAndTitle.className = 'text-center md:text-left'
+      priceAndTitle.appendChild(title)
+      priceAndTitle.appendChild(price)
+
+      // Create img & title
+      // <div class="md:flex bg-white rounded-lg p-6 hover:bg-gray-300"><price><title></div>
+      const card = document.createElement('div')
+      card.className = 'md:flex bg-white rounded-lg p-6 hover:bg-gray-300'
+      card.appendChild(imagen)
+      card.appendChild(priceAndTitle)
+
+      allItems.push(card)
     })
 
     appNode.append(...allItems)
+    appNode.className = 'mt-10 grid grid-cols-2 gap-2'
   })
